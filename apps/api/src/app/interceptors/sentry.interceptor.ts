@@ -9,13 +9,6 @@ import * as Sentry from '@sentry/node';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-class NamedError extends Error {
-  constructor(name: string, error: any) {
-    super(error);
-    this.name = name;
-  }
-}
-
 @Injectable()
 export class SentryInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {

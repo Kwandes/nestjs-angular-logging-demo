@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 
+import '@sentry/tracing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SentryInterceptor } from './interceptors/sentry.interceptor';

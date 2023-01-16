@@ -13,7 +13,7 @@ export class AppController {
     return this.appService.getData();
   }
 
-  @Get('Error')
+  @Get('error')
   error() {
     throw new BadRequestException('A bad request example');
   }

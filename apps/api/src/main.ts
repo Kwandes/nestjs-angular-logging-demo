@@ -1,8 +1,8 @@
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app/app.module';
-
 import * as Sentry from '@sentry/node';
+import '@sentry/tracing';
+import { AppModule } from './app/app.module';
 import { SentryConfig } from './app/sentry.config';
 
 async function bootstrap() {
@@ -24,9 +24,13 @@ async function bootstrap() {
   Sentry.init({
     dsn: SentryConfig.dsn,
     environment: SentryConfig.env,
+    debug: false,
     tracesSampleRate: 1.0,
   });
-  Logger.log(`Sentry initialized in environnement ${SentryConfig.env}`);
+
+  app.use(Sentry.Handlers.requestHandler());
+  app.use(Sentry.Handlers.tracingHandler());
+  Logger.log(`Sentry initialized in env: ${SentryConfig.env}`);
 
   const port = process.env.PORT || 3333;
   await app.listen(port);
