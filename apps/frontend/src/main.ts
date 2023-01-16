@@ -11,12 +11,21 @@ Sentry.init({
     // performance, including custom Angular routing instrumentation
     new BrowserTracing({
       tracePropagationTargets: [
+        'localhost:3000',
+        'api.dev.omnihost.app',
+        'api.danleterre.omnihost.app/api',
+        /^\//,
+      ],
+      routingInstrumentation: Sentry.routingInstrumentation,
+    }),
+    /*{
+      tracePropagationTargets: [
         'localhost',
         'https://api.dev.omnihost.app',
         'https://api.danleterre.omnihost.app/api',
       ],
       routingInstrumentation: Sentry.routingInstrumentation,
-    }),
+    }*/
   ],
 
   // Set tracesSampleRate to 1.0 to capture 100%

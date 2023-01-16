@@ -6,7 +6,13 @@
     alt="Nx - Smart, Fast and Extensible Build System"
   />
 </div>
-<div>Message: {{ hello$ | async | json }}</div>
 
-<button (click)="errorA()">Error A</button>
-<button (click)="event()">Event</button>
+<button (click)="unhandledError()">Unhandled Error caught by angular</button>
+<br />
+<button (click)="handledError()">Handled Error captured through Sentry</button>
+<br />
+<button (click)="event()">Normal event about something happening</button>
+<br />
+<button (click)="helloApi()">Call /hello endpoint</button>
+<button (click)="errorApi()">Call /error endpoint</button>
+<button (click)="fakeApi()">Call /fake endpoint</button>

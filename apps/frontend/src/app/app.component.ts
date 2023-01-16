@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Message } from '@logging-demo/api-interfaces';
 import * as Sentry from '@sentry/angular';
+import { AppService } from './services/app.service';
+import { SentryService } from './services/sentry.service';
 
 @Component({
   selector: 'logging-demo-root',
@@ -9,14 +9,49 @@ import * as Sentry from '@sentry/angular';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  hello$ = this.http.get<Message>('/api/hello');
-  constructor(private http: HttpClient) {}
+  constructor(
+    private appService: AppService,
+    private sentryService: SentryService
+  ) {}
 
-  errorA() {
-    throw new Error('A custom error');
+  unhandledError() {
+    throw new Error('An unhandled error');
+  }
+
+  handledError() {
+    this.sentryService.logError(new Error('A handled error'));
   }
 
   event() {
-    Sentry.captureMessage('A fun message / event');
+    Sentry.captureMessage('Normal event about something happening');
+  }
+
+  helloApi() {
+    this.appService.callHelloEndpoint().subscribe({
+      next: () => {
+        this.sentryService.logEvent({
+          message: 'Called the hello world endpoint',
+          level: 'info',
+        });
+      },
+      error: (error) => {
+        this.sentryService.logError(error);
+      },
+    });
+  }
+
+  errorApi() {
+    this.appService.callErrorEndpoint().subscribe({
+      error: (error) => {
+        this.sentryService.logError(error);
+      },
+    });
+  }
+  fakeApi() {
+    this.appService.callFakeEndpoint().subscribe({
+      error: (error) => {
+        this.sentryService.logError(error);
+      },
+    });
   }
 }

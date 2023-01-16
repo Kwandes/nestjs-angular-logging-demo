@@ -7,11 +7,15 @@ import { Router } from '@angular/router';
 import * as Sentry from '@sentry/angular';
 import { AppComponent } from './app.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
+import { AppService } from './services/app.service';
+import { SentryService } from './services/sentry.service';
 
 @NgModule({
   declarations: [AppComponent, NxWelcomeComponent],
   imports: [BrowserModule, HttpClientModule],
   providers: [
+    AppService,
+    SentryService,
     {
       provide: ErrorHandler,
       useValue: Sentry.createErrorHandler({
