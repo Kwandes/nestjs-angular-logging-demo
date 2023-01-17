@@ -10,7 +10,7 @@ export class SentryService {
     Sentry.captureEvent(event);
   }
 
-  logError(error: any) {
+  logError(error: unknown) {
     if (error instanceof HttpErrorResponse) {
       console.error(error);
       Sentry.captureEvent({

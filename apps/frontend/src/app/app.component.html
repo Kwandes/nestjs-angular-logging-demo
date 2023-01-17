@@ -6,13 +6,6 @@
     alt="Nx - Smart, Fast and Extensible Build System"
   />
 </div>
-
-<button (click)="unhandledError()">Unhandled Error caught by angular</button>
-<br />
-<button (click)="handledError()">Handled Error captured through Sentry</button>
-<br />
-<button (click)="event()">Normal event about something happening</button>
-<br />
-<button (click)="helloApi()">Call /hello endpoint</button>
-<button (click)="errorApi()">Call /error endpoint</button>
-<button (click)="fakeApi()">Call /fake endpoint</button>
+<button (click)="gotoPageA()">Go To Page A</button>
+<button (click)="gotoPageB()">Go To Page B</button>
+<router-outlet></router-outlet>

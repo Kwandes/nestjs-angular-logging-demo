@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import * as Sentry from '@sentry/angular';
-import { AppService } from './services/app.service';
-import { SentryService } from './services/sentry.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'logging-demo-root',
@@ -9,49 +7,13 @@ import { SentryService } from './services/sentry.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  constructor(
-    private appService: AppService,
-    private sentryService: SentryService
-  ) {}
+  constructor(public router: Router) {}
 
-  unhandledError() {
-    throw new Error('An unhandled error');
+  gotoPageA() {
+    this.router.navigate(['/page-a']);
   }
 
-  handledError() {
-    this.sentryService.logError(new Error('A handled error'));
-  }
-
-  event() {
-    Sentry.captureMessage('Normal event about something happening');
-  }
-
-  helloApi() {
-    this.appService.callHelloEndpoint().subscribe({
-      next: () => {
-        this.sentryService.logEvent({
-          message: 'Called the hello world endpoint',
-          level: 'info',
-        });
-      },
-      error: (error) => {
-        this.sentryService.logError(error);
-      },
-    });
-  }
-
-  errorApi() {
-    this.appService.callErrorEndpoint().subscribe({
-      error: (error) => {
-        this.sentryService.logError(error);
-      },
-    });
-  }
-  fakeApi() {
-    this.appService.callFakeEndpoint().subscribe({
-      error: (error) => {
-        this.sentryService.logError(error);
-      },
-    });
+  gotoPageB() {
+    this.router.navigate(['/page-b']);
   }
 }

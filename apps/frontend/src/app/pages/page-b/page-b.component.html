@@ -1,0 +1,13 @@
+<div style="text-align: center">
+  <h1>Page B</h1>
+</div>
+
+<button (click)="unhandledError()">Unhandled Error caught by angular</button>
+<br />
+<button (click)="handledError()">Handled Error captured through Sentry</button>
+<br />
+<button (click)="event()">Normal event about something happening</button>
+<br />
+<button (click)="helloApi()">Call /hello endpoint</button>
+<button (click)="errorApi()">Call /error endpoint</button>
+<button (click)="fakeApi()">Call /fake endpoint</button>

@@ -3,16 +3,17 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, ErrorHandler } from '@angular/core';
-import { Router } from '@angular/router';
 import * as Sentry from '@sentry/angular';
 import { AppComponent } from './app.component';
-import { NxWelcomeComponent } from './nx-welcome.component';
+import { AppRoutingModule } from './app.routing.module';
+import { PageAComponent } from './pages/page-a/page-a.component';
+import { PageBComponent } from './pages/page-b/page-b.component';
 import { AppService } from './services/app.service';
 import { SentryService } from './services/sentry.service';
 
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent],
-  imports: [BrowserModule, HttpClientModule],
+  declarations: [AppComponent, PageAComponent, PageBComponent],
+  imports: [BrowserModule, HttpClientModule, AppRoutingModule],
   providers: [
     AppService,
     SentryService,
@@ -24,14 +25,9 @@ import { SentryService } from './services/sentry.service';
       }),
     },
     {
-      provide: Sentry.TraceService,
-      deps: [Router],
-    },
-    {
       provide: APP_INITIALIZER,
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       useFactory: () => () => {},
-      deps: [Sentry.TraceService],
       multi: true,
     },
   ],
