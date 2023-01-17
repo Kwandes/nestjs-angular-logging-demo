@@ -54,4 +54,20 @@ export class PageBComponent {
       },
     });
   }
+
+  getBottles() {
+    this.appService.getBottles().subscribe({
+      next: (response) => {
+        console.log('bottles', response);
+      },
+    });
+  }
+
+  createBottle() {
+    this.appService.createBottle().subscribe({
+      next: (response) => {
+        console.log('created bottle', response);
+      },
+    });
+  }
 }
