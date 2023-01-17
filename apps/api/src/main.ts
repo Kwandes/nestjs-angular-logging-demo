@@ -2,6 +2,7 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import * as Sentry from '@sentry/node';
 import '@sentry/tracing';
+import { Integrations } from '@sentry/tracing';
 import { AppModule } from './app/app.module';
 import { SentryConfig } from './app/sentry.config';
 
@@ -26,6 +27,7 @@ async function bootstrap() {
     environment: SentryConfig.env,
     debug: false,
     tracesSampleRate: 1.0,
+    integrations: [new Integrations.Postgres()],
   });
 
   app.use(Sentry.Handlers.requestHandler());
