@@ -5,6 +5,7 @@ import { AppModule } from './app/app.module';
 Sentry.init({
   dsn: '<DSN>',
   integrations: [],
+  tunnel: `http://localhost:8080/tunnel`,
 });
 
 platformBrowserDynamic()
