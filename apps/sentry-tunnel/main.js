@@ -38,6 +38,7 @@ app.post('/tunnel', async (req, res) => {
     const envelope = req.body;
     const pieces = envelope.split('\n');
     const header = JSON.parse(pieces[0]);
+    const type = JSON.parse(pieces[1]).type;
 
     // Verify that the given DSN is allowed
     if (!allowedDSNs.includes(header.dsn)) {
@@ -49,7 +50,9 @@ app.post('/tunnel', async (req, res) => {
     // Remove leading slash
     const projectId = pathname.substring(1);
 
-    log.trace(`Sending eventId ${header.event_id} to projectId ${projectId}`);
+    log.trace(
+      `Sending ${type} with id ${header.event_id} to projectId ${projectId}`
+    );
 
     const sentryIngestURL = `https://sentry.io/api/${projectId}/envelope/`;
     await fetch(sentryIngestURL, {
@@ -85,9 +88,8 @@ app.get('/healthcheck', (_req, res) => {
 // ---------------------Default------------------------
 // Reject all non defined paths
 app.all('*', (req, res) => {
-  log.info(`Invalid request: ${req.method} ${req.url}.`);
-  log.info(`Request body: ${JSON.stringify(req.body)}`);
-  log.info('Rejecting request.');
+  log.warn(`Invalid request: ${req.method} ${req.url}.`);
+  log.warn(`Request body: ${JSON.stringify(req.body)}`);
 
   res.status(401).send({
     error: 'UnauthorizedError',
