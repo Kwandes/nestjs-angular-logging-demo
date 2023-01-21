@@ -23,6 +23,7 @@ export class PageAComponent {
   }
 
   event() {
+    console.log('Capturing a normal message');
     Sentry.captureMessage('Normal event about something happening');
   }
 

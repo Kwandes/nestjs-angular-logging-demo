@@ -15,25 +15,26 @@ export interface IBottle {
 })
 export class AppService {
   constructor(private http: HttpClient) {}
+  apiUrl = 'http://localhost:3333';
 
   public callErrorEndpoint(): Observable<void> {
-    return this.http.get<void>(`http://localhost:3333/error`);
+    return this.http.get<void>(`${this.apiUrl}/error`);
   }
 
   public callHelloEndpoint(): Observable<void> {
-    return this.http.get<void>(`http://localhost:3333/hello`);
+    return this.http.get<void>(`${this.apiUrl}/hello`);
   }
 
   public callFakeEndpoint(): Observable<void> {
-    return this.http.get<void>(`http://localhost:3333/fake`);
+    return this.http.get<void>(`${this.apiUrl}/fake`);
   }
 
   public getBottles(): Observable<IBottle[]> {
-    return this.http.get<IBottle[]>(`http://localhost:3333/bottles`);
+    return this.http.get<IBottle[]>(`${this.apiUrl}/bottles`);
   }
 
   public createBottle(): Observable<IBottle> {
-    return this.http.post<IBottle>(`http://localhost:3333/bottles`, {
+    return this.http.post<IBottle>(`${this.apiUrl}/bottles`, {
       brand: 'Example bottle',
       capacity: '1L',
     });
